@@ -150,6 +150,7 @@ void runBenchmark(DeviceRef& device, const Benchmark& bench)
 
   // Warmup loop
   const int numBenchmarkRuns = max(numRuns - 1, 1);
+  std::cout << '\n' << numBenchmarkRuns << '\n';
   const int numWarmupRuns = numRuns - numBenchmarkRuns;
   for (int i = 0; i < numWarmupRuns; ++i)
     filter.execute();
@@ -161,8 +162,10 @@ void runBenchmark(DeviceRef& device, const Benchmark& bench)
     __itt_resume();
   #endif
 
+    std::cout << "Running " << numBenchmarkRuns << " runs\n";
   for (int i = 0; i < numBenchmarkRuns; ++i)
     filter.execute();
+  std::cout << "Done\n";
 
   #ifdef VTUNE
     __itt_pause();
